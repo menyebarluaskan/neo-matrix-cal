@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Neo Matrix Calculator
 
-## Getting Started
+A modern remake of Matrix Calculator using next.js
 
-First, run the development server:
+## Main Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* Add Matrix Variables
+* Calculate Matrix Variables
+  * Formula Parser
+  * Matrix Addition
+  * Matrix Subtraction
+  * Matrix Multiplication
+  * Matrix Determinant
+  * Matrix Inverse
+  * Matrix Rank
+  * Matrix Transpose
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structures
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* components: contains UI components
+* libs: contains the calculation algorithm
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## UI Components
 
-## Learn More
+* List of Matrices
+* Add Matrix Button
+* Matrix formula form
+* Result Box
 
-To learn more about Next.js, take a look at the following resources:
+## Matrix Calculation Libs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* matrix variable parser
+* List of matrices
+* matrix formula parser
+* matrix calculator
