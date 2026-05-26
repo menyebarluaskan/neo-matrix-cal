@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { isNumberObject } from "util/types";
 
 export interface MatrixState {
   varName: string;
@@ -6,34 +7,27 @@ export interface MatrixState {
   rawValue: string;
 };
 
-const initialState: MatrixState = {
-  varName: "",
-  value: NaN,
-  rawValue: ""
-};
+const initialState: MatrixState[] = [];
 
 export const matrixSlice = createSlice({
   name: 'matrix',
   initialState,
   reducers: {
-    updateVarName: (state, action: PayloadAction<string>) => {
-      state.varName = action.payload;
+    addNewMatrix: (state, action: PayloadAction<string>) => {
+      state = [...state, { varName: action.payload, value: NaN, rawValue: "" }]
     },
-    parse: state => {
-      // TODO: add matrix parser and update the value
-    },
-    updateRawString: (state, action: PayloadAction<string>) => {
-      state.rawValue = action.payload;
-    },
+    updateMatrix: (state, action: PayloadAction<MatrixState>) => {
+      const matrix = state.find(matrix => matrix.varName == action.payload.varName);
+      if (!matrix) {
+        state = [...state, action.payload];
+        return;
+      }
+      matrix.value = action.payload.value;
+      matrix.rawValue = action.payload.rawValue;
+    }
   },
-  selectors: {
-    selectVarName: (matrix) => matrix.varName,
-    selectValue: (matrix) => matrix.value,
-    selectRawString: (matrix) => matrix.rawValue,
-  }
 });
 
-export const { parse, updateVarName, updateRawString } = matrixSlice.actions;
-export const { selectValue, selectRawString, selectVarName } = matrixSlice.selectors;
+export const { addNewMatrix, updateMatrix } = matrixSlice.actions;
 
 export default matrixSlice.reducer;

@@ -5,7 +5,9 @@ interface IProps {
 export default function AddMatrixBtn({ onAddMatrix }: IProps) {
   return (
     <>
-      <button onClick={() => onAddMatrix()}>Add Matrix</button>
+      <button
+        className="hover:bg-white hover:text-black caret-amber-50 text-2xl"
+        onClick={() => onAddMatrix()}>Add Matrix</button>
     </>
   )
 }
