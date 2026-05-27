@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { isNumberObject } from "util/types";
+import MatrixParser from "./matrixParser";
 
 export interface MatrixState {
   varName: string;
@@ -24,10 +24,17 @@ export const matrixSlice = createSlice({
       }
       matrix.value = action.payload.value;
       matrix.rawValue = action.payload.rawValue;
+    },
+    parseMatrix: (state, action: PayloadAction<string>) => {
+      const matrix = state.find(matrix => matrix.varName == action.payload);
+      if (!matrix) {
+        throw new Error('Failed to parse, matrix not found');
+      }
+      matrix.value = MatrixParser(matrix.rawValue);
     }
   },
 });
 
-export const { addNewMatrix, updateMatrix } = matrixSlice.actions;
+export const { addNewMatrix, updateMatrix, parseMatrix } = matrixSlice.actions;
 
 export default matrixSlice.reducer;
