@@ -29,7 +29,7 @@ A modern remake of Matrix Calculator using next.js
 
 ## Matrix Calculation Libs
 
-- [ ] matrix variable parser
+- [x] matrix variable parser
 - [x] List of matrices
 - [ ] matrix formula parser
 - [ ] matrix calculator
