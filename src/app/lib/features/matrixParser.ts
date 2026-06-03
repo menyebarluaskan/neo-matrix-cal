@@ -1,5 +1,5 @@
-export default function MatrixParser(rawValue: string): Number[][] | Number {
-  const matrix: Number[][] = [];
+export function parseMatrix(rawValue: string): number[][] | number {
+  const matrix: number[][] = [];
 
   const trimmed = rawValue.trim();
 
@@ -42,4 +42,12 @@ export default function MatrixParser(rawValue: string): Number[][] | Number {
       }
     });
   return matrix;
+}
+
+export function stringifyMatrix(matrix: number | number[][]): string {
+  if (!isNaN(matrix as number)) {
+    return `${matrix}`;
+  }
+  const trueMatrix = matrix as number[][];
+  return trueMatrix.map(row => row.join(" ")).join("\n")
 }

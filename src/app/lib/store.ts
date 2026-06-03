@@ -6,7 +6,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 export const makeStore = () => {
   return configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    devTools: true
   })
 }
 

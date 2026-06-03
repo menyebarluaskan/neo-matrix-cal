@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest";
-import MatrixParser from "./matrixParser";
+import { parseMatrix } from "./matrixParser";
 
 describe("Matrix Parser", () => {
   test("parse matrix with blank new line", () => {
@@ -7,7 +7,7 @@ describe("Matrix Parser", () => {
 1 2 3
 
 `;
-    const value = MatrixParser(rawValue);
+    const value = parseMatrix(rawValue);
     expect(value).toEqual([[1, 2, 3]]);
   });
 
@@ -15,7 +15,7 @@ describe("Matrix Parser", () => {
     const rawValue = `
 1 2
 2 1`;
-    const value = MatrixParser(rawValue);
+    const value = parseMatrix(rawValue);
     expect(value).toEqual([
       [1, 2],
       [2, 1],
@@ -27,7 +27,7 @@ describe("Matrix Parser", () => {
 1 2 3
 2 3 1
 3 1 2`;
-    const value = MatrixParser(rawValue);
+    const value = parseMatrix(rawValue);
     expect(value).toEqual([
       [1, 2, 3],
       [2, 3, 1],
@@ -37,7 +37,7 @@ describe("Matrix Parser", () => {
 
   test("parse 1x1 matrix into scalar", () => {
     const rawValue = `1`;
-    const value = MatrixParser(rawValue);
+    const value = parseMatrix(rawValue);
     expect(value).toEqual(1);
   });
 
@@ -46,7 +46,7 @@ describe("Matrix Parser", () => {
 1 2  3
 2 3 1 
   3 1 2`;
-    const value = MatrixParser(rawValue);
+    const value = parseMatrix(rawValue);
     expect(value).toEqual([
       [1, 2, 3],
       [2, 3, 1],
@@ -57,7 +57,7 @@ describe("Matrix Parser", () => {
   test("parse empty matrix as NaN", () => {
     const rawValue = `
   `;
-    const value = MatrixParser(rawValue);
+    const value = parseMatrix(rawValue);
     expect(value).toBeNaN();
   });
 
@@ -66,7 +66,7 @@ describe("Matrix Parser", () => {
 1 2 3
 2 3 
 3 1 2`;
-    expect(() => MatrixParser(rawValue)).toThrow('Failed to Parse, invalid dimension');
+    expect(() => parseMatrix(rawValue)).toThrow('Failed to Parse, invalid dimension');
   });
 
   test("failed invalid character", () => {
@@ -74,6 +74,6 @@ describe("Matrix Parser", () => {
 1 2 3
 2 3 a
 3 1 2`;
-    expect(() => MatrixParser(rawValue)).toThrow('Failed to Parse, invalid character');
+    expect(() => parseMatrix(rawValue)).toThrow('Failed to Parse, invalid character');
   });
 });
