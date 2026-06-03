@@ -1,40 +1,76 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import MatrixParser from "./matrixParser";
+import { parseMatrix, stringifyMatrix } from "./matrixParser";
+import { convertToRPN, evaluateFormula, Operand } from "./matrixCalculation";
 
-export interface MatrixState {
+export interface Matrix {
   varName: string;
-  value: Array<Array<Number>> | Number;
+  value: Array<Array<number>> | number;
   rawValue: string;
 };
 
-const initialState: MatrixState[] = [];
+export interface MatrixState {
+  matrices: Array<Matrix>;
+  result?: Matrix;
+}
+
+const initialState: MatrixState = {
+  matrices: [],
+};
 
 export const matrixSlice = createSlice({
   name: 'matrix',
   initialState,
   reducers: {
     addNewMatrix: (state, action: PayloadAction<string>) => {
-      state = [...state, { varName: action.payload, value: NaN, rawValue: "" }]
+      state.matrices = [...state.matrices, { varName: action.payload, value: NaN, rawValue: "" }]
     },
-    updateMatrix: (state, action: PayloadAction<MatrixState>) => {
-      const matrix = state.find(matrix => matrix.varName == action.payload.varName);
+    updateMatrix: (state, action: PayloadAction<Matrix>) => {
+      const matrix = state.matrices.find(matrix => matrix.varName === action.payload.varName);
       if (!matrix) {
-        state = [...state, action.payload];
+        state.matrices = [...state.matrices, action.payload];
         return;
       }
       matrix.value = action.payload.value;
       matrix.rawValue = action.payload.rawValue;
     },
-    parseMatrix: (state, action: PayloadAction<string>) => {
-      const matrix = state.find(matrix => matrix.varName == action.payload);
-      if (!matrix) {
-        throw new Error('Failed to parse, matrix not found');
+    // parseMatrix: (state, action: PayloadAction<string>) => {
+    //   const matrix = state.matrices.find(matrix => matrix.varName === action.payload);
+    //   if (!matrix) {
+    //     throw new Error('Failed to parse, matrix not found');
+    //   }
+    //   matrix.value = parseMatrix(matrix.rawValue);
+    // },
+    evaluateExp: (state, action: PayloadAction<string>) => {
+      const exp = convertToRPN(action.payload);
+      // Loading Matrices from store
+      for (const token of exp) {
+        if (token.type !== 'Operand') {
+          continue;
+        }
+        const operand = token as Operand;
+        if (operand.isNumber) {
+          continue;
+        }
+        const matrix = state.matrices.find(matrix => matrix.varName === operand.raw);
+        if (!matrix) {
+          throw new Error('Failed to parse, matrix not found');
+        }
+        if (isNaN(matrix.value as number)) {
+          matrix.value = parseMatrix(matrix.rawValue);
+          matrix.rawValue = stringifyMatrix(matrix.value);
+        }
+        operand.value = matrix.value;
       }
-      matrix.value = MatrixParser(matrix.rawValue);
-    }
+      const result = evaluateFormula(exp);
+      state.result = {
+        varName: 'result',
+        value: result,
+        rawValue: stringifyMatrix(result)
+      };
+    },
   },
 });
 
-export const { addNewMatrix, updateMatrix, parseMatrix } = matrixSlice.actions;
+export const { addNewMatrix, updateMatrix, evaluateExp } = matrixSlice.actions;
 
 export default matrixSlice.reducer;

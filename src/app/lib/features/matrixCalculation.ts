@@ -1,5 +1,3 @@
-import MatrixParser from "./matrixParser";
-
 export const MismatchDimError = Error("matrix dimension is mismatched");
 export const MatrixScalarError = Error("matrix cannot be added with scalar value");
 
@@ -15,7 +13,7 @@ interface Operator extends Token {
   callback: (a: matrixData, b: matrixData) => matrixData;
 }
 
-interface Operand extends Token {
+export interface Operand extends Token {
   type: 'Operand';
   value?: matrixData;
   isNumber: boolean;
