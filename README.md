@@ -7,7 +7,7 @@ A modern remake of Matrix Calculator using next.js
 - [x] Add Matrix Variables
 - [ ] Calculate Matrix Variables
   - [ ] Formula Parser
-  - [ ] Matrix Addition
+  - [x] Matrix Addition
   - [ ] Matrix Subtraction
   - [ ] Matrix Multiplication
   - [ ] Matrix Determinant
@@ -24,8 +24,8 @@ A modern remake of Matrix Calculator using next.js
 
 - [x] List of Matrices
 - [x] Add Matrix Button
-- [ ] Matrix formula form
-- [ ] Result Box
+- [x] Matrix formula form
+- [x] Result Box
 
 ## Matrix Calculation Libs
 
